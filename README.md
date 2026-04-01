@@ -7,4 +7,4 @@ This project uses data from the **[FLUXNET2015 Dataset](https://fluxnet.org/)**.
 
 **Additional Sources:**
 * **MODIS:** Courtesy of the NASA EOSDIS Land Processes Distributed Active Archive Center (LP DAAC).
-* **Bureau of Meteorology (BoM):** © Commonwealth of Australia, Bureau of Meteorology. Licensed under CC BY 3.0 AU.
+* **[Bureau of Meteorology](https://www.bom.gov.au/) (BoM):** © Commonwealth of Australia, Bureau of Meteorology. Licensed under CC BY 3.0 AU.
