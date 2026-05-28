@@ -1,4 +1,4 @@
-# NEE Cross-Site Classification - MSc Thesis CarbonFlux ML Transformers Integration
+# NEE Cross-Site Classification - MSc Thesis _Carbon Flux Behavior Classification Integrating Transformers and Classical Machine Learning Methods_
 
 Carbon flux (NEE) classification using tree-based and transformer models with cross-site test across Australian flux tower sites.
 
