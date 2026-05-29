@@ -1,0 +1,49 @@
+# Base configuration — inherited by all cross-site holdout configs.
+# All parameters here can be overridden in child YAML files or via CLI.
+
+name: base_experiment
+random_seed_base: 42
+n_runs: 10
+n_trials: 600
+optimization_metrics:
+  - accuracy
+  - f1_macro
+  - f1_weighted
+  - precision_macro
+  - precision_weighted
+  - recall_macro
+  - recall_weighted
+primary_metric: f1_macro
+use_bom_options: [true, false]
+val_size: 0.20
+
+data:
+  base_dir: data/processed
+  all_sites:
+    - tumbarumba
+    - cumberland
+    - whroo
+    - wombat
+    - robson_creek_queensland
+  target_col: target_class
+  features_to_drop_always:
+    - NEE_VUT_REF
+    - TIMESTAMP
+  bom_features:
+    - Minimum_temperature_BOM
+    - Rainfall_BOM
+    - Maximum_temperature_BOM
+  categorical_cols:
+    - year
+    - month
+    - week_of_year
+  dataset_filename: full_dataset.csv
+
+resources:
+  max_workers: auto
+  max_torch_threads: auto
+  force_cpu: false
+
+output:
+  results_dir: outputs
+  keep_intermediate_results: false

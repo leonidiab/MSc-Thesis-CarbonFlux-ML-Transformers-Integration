@@ -1,0 +1,14 @@
+model_type: trees
+
+resources:
+  max_workers: 4
+
+model_config_extra:
+  n_trials: 600
+  models_to_test:
+    - gradient_boosting
+    - xgboost
+    - random_forest
+    - lightgbm
+    - extra_trees
+    - decision_tree

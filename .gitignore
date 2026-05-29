@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data & outputs (too large for git)
+outputs/
+*.joblib
+*.save
+
+# Logs
+*.log
+experiment.log
+
+# Temporary & Caches
+_gen_configs.py
+.pytest_cache/
+.ipynb_checkpoints/
+.coverage
+htmlcov/
+
+# Optuna
+optuna_*.db
+
+# PyTorch Lightning & PyTorch Tabular
+lightning_logs/
+.pt_tmp/
+
+# Legacy Script Outputs
+results_*/
+best_model_*/

@@ -1,0 +1,12 @@
+_inherit: ../base.yaml
+
+name: cross_site_holdout_wombat
+description: "Train on 4 sites, holdout wombat for cross-site generalization test."
+
+data:
+  train_sites:
+    - cumberland
+    - robson_creek_queensland
+    - tumbarumba
+    - whroo
+  holdout_site: wombat
