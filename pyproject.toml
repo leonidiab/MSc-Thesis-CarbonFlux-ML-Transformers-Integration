@@ -86,5 +86,11 @@ disable = [
     "unsupported-membership-test", # Solves false positives on dynamic container attributes
     "consider-using-max-builtin",  # Allows explicit conditional checks for readability
     "consider-using-min-builtin",  # Allows explicit conditional checks for readability
+    "missing-module-docstring",    # Web/scripts don't require module-level docstrings
+    "logging-fstring-interpolation",# Allows standard f-strings in logging calls
+    "cell-var-from-loop",          # Allows loops with lambdas executing synchronously
+    "no-else-return",              # Allows explicit else blocks after return for code branching clarity
+    "too-many-nested-blocks",      # Allowed for complex server routes and logic blocks
+    "too-many-return-statements",  # Allowed for early-exit validation in web endpoints
 ]
 
