@@ -34,6 +34,20 @@ python scripts/test_cross_site.py \
     --model-dir outputs/holdout_wombat/trees/f1_macro/with_BOM/run_01 \
     --test-site wombat
 ```
+### Painel de Teste Interativo (Dashboard)
+
+Você pode iniciar o painel interativo web para testar visualmente os melhores modelos salvos com novos conjuntos de dados:
+
+```bash
+python scripts/run_app.py
+```
+
+Isso iniciará automaticamente um servidor Flask local seguro em `http://127.0.0.1:5000` e abrirá a interface no seu navegador padrão. Recursos principais:
+* **Hub de Modelos**: Varredura dinâmica que exibe informações e métricas de todos os modelos salvos em `outputs/`.
+* **Predição em Lote (CSV)**: Arraste e solte arquivos CSV, visualize as previsões na tabela e baixe o resultado final rotulado. Caso o dataset de teste contenha a coluna real `target_class`, a interface calcula métricas de acurácia e plota a matriz de confusão correspondente.
+* **Previsão em Tempo Real**: Teste dados individuais através de formulários dinâmicos com sliders baseados nos limites reais de cada variável do modelo.
+
+Para mais informações sobre a arquitetura da interface, API REST e salvaguardas de segurança, consulte o [Manual do Usuário Completo](file:///C:/Users/leoni/Documents/Github/MSc-Thesis-CarbonFlux-ML-Transformers-Integration-DEV/documentation/USER_GUIDE_PT_BR.md#4-painel-de-testes-interativo-dashboard-web).
 
 ### Opções da CLI
 

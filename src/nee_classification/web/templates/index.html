@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEE Carbon Flux — State-Change Classification Dashboard</title>
+    <meta name="description" content="Interactive dashboard for classifying net ecosystem exchange (NEE) carbon flux behaviour across Australian flux tower sites using tree-based and transformer models.">
+    <!-- Google Fonts: Outfit for headings, Inter for body -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="glass-bg"></div>
+
+    <header class="app-header">
+        <div class="header-container">
+            <div class="logo-area">
+                <span class="logo-icon">🌿</span>
+                <div>
+                    <h1>NEE Carbon Flux</h1>
+                    <p class="subtitle">Cross-Site Generalization Test Suite</p>
+                </div>
+            </div>
+            <div class="system-status">
+                <span class="status-indicator online"></span>
+                <span>API Status: Online</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="app-container">
+
+        <!-- ============================================================ -->
+        <!-- SCREEN 1: Landing / Hero                                      -->
+        <!-- ============================================================ -->
+        <section class="screen active" id="landing-section">
+            <div class="hero-content">
+                <div class="hero-eyebrow">MSc Thesis Research Project</div>
+                <h2 class="hero-title">Carbon Flux Behaviour<br>Classification System</h2>
+                <p class="hero-description">
+                    This dashboard provides an interactive interface for the NEE (Net Ecosystem Exchange) 
+                    state-change classification framework. The system leverages both classical machine learning 
+                    (XGBoost) and modern transformer architectures (FT-Transformer, TabTransformer) to classify 
+                    whether an ecosystem is functioning as a <strong>carbon sink</strong> or 
+                    <strong>non-sink</strong>, based on satellite remote sensing and meteorological observations 
+                    from Australian flux tower sites.
+                </p>
+
+                <div class="hero-stats-grid">
+                    <div class="hero-stat-card">
+                        <span class="hero-stat-icon">🛰️</span>
+                        <span class="hero-stat-value">5</span>
+                        <span class="hero-stat-label">Australian Flux Tower Sites</span>
+                    </div>
+                    <div class="hero-stat-card">
+                        <span class="hero-stat-icon">📊</span>
+                        <span class="hero-stat-value">28</span>
+                        <span class="hero-stat-label">Input Features (MODIS + BOM)</span>
+                    </div>
+                    <div class="hero-stat-card">
+                        <span class="hero-stat-icon">🧠</span>
+                        <span class="hero-stat-value">3</span>
+                        <span class="hero-stat-label">Model Architectures</span>
+                    </div>
+                </div>
+
+                <div class="hero-classification-info">
+                    <div class="class-pill sink-pill">
+                        <span class="class-pill-dot sink-dot"></span>
+                        <div>
+                            <strong>Sink (S)</strong>
+                            <span>Ecosystem absorbs more CO₂ than it releases</span>
+                        </div>
+                    </div>
+                    <div class="class-pill nosink-pill">
+                        <span class="class-pill-dot nosink-dot"></span>
+                        <div>
+                            <strong>Non-Sink (NS)</strong>
+                            <span>Ecosystem releases more CO₂ than it absorbs</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary btn-cta" id="btn-get-started">
+                    Get Started
+                    <span class="cta-arrow">→</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- SCREEN 2: Session Configuration (Model + Input Method)        -->
+        <!-- ============================================================ -->
+        <section class="screen" id="setup-section">
+            <button class="back-link" id="btn-back-to-landing">
+                <span>←</span> Back to Overview
+            </button>
+
+            <!-- Step A: Model Selection -->
+            <div class="setup-step">
+                <div class="section-header">
+                    <h2>1. Select a Trained Model</h2>
+                    <button id="btn-refresh-models" class="btn btn-secondary">
+                        <span class="btn-icon">🔄</span> Refresh Models
+                    </button>
+                </div>
+
+                <div id="models-list" class="models-grid">
+                    <div class="loading-state">
+                        <div class="spinner"></div>
+                        <p>Scanning outputs directory for saved models...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step B: Input Method Selection -->
+            <div class="setup-step">
+                <div class="section-header">
+                    <h2>2. Choose Input Method</h2>
+                </div>
+
+                <div class="input-method-grid">
+                    <div class="input-method-card" data-method="csv" id="method-csv">
+                        <div class="method-icon">📁</div>
+                        <div class="method-info">
+                            <h3>Upload CSV Dataset</h3>
+                            <p>
+                                Upload a .csv <b>labeled</b> file containing ecosystem feature observations. 
+                                The model will classify each row as Sink (S) or Non-Sink (NS) 
+                                and provide downloadable results with evaluation metrics.
+                            </p>
+                        </div>
+                        <div class="method-check">
+                            <span class="check-circle"></span>
+                        </div>
+                    </div>
+
+                    <div class="input-method-card" data-method="manual" id="method-manual">
+                        <div class="method-icon">✏️</div>
+                        <div class="method-info">
+                            <h3>Enter Features Manually</h3>
+                            <p>
+                                Input individual feature values through sliders and selectors 
+                                to obtain a real-time single-instance prediction with 
+                                class probability confidence meters.
+                            </p>
+                        </div>
+                        <div class="method-check">
+                            <span class="check-circle"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Proceed Button -->
+            <div class="setup-actions">
+                <button class="btn btn-primary btn-cta" id="btn-proceed-inference" disabled>
+                    Proceed to Inference
+                    <span class="cta-arrow">→</span>
+                </button>
+                <p class="setup-hint" id="setup-hint">Please select a model and an input method to continue.</p>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- SCREEN 3: Inference Workspace (existing UI, preserved)        -->
+        <!-- ============================================================ -->
+        <section class="screen" id="inference-section">
+            <button class="back-link" id="btn-back-to-setup">
+                <span>←</span> Back to Setup
+            </button>
+
+            <div class="dashboard-section">
+                <div class="section-header">
+                    <h2>Run Inference</h2>
+                    <div class="selected-model-banner">
+                        <span class="badge" id="banner-model-type">XGBoost</span>
+                        <span class="banner-text" id="banner-model-path">outputs/holdout_wombat/best_trees_final</span>
+                    </div>
+                </div>
+
+                <!-- Tabs: Batch Upload or Manual Input -->
+                <div class="tabs-container">
+                    <div class="tab-headers">
+                        <button class="tab-header active" data-tab="tab-batch">Batch Prediction (CSV)</button>
+                        <button class="tab-header" data-tab="tab-manual">Manual Feature Entry</button>
+                    </div>
+
+                    <div class="tab-contents">
+                        <!-- Tab Content: Batch Upload -->
+                        <div class="tab-content active" id="tab-batch">
+                            <div class="upload-split-layout">
+                                <div class="upload-control-panel">
+                                    <p class="tab-description">
+                                        Upload a CSV dataset containing similar features to the training set. The model will label each row with the predicted NEE class.
+                                    </p>
+
+                                    <div class="drop-zone" id="csv-drop-zone">
+                                        <span class="drop-zone-icon">📥</span>
+                                        <span class="drop-zone-text">Drag and drop your CSV here or <strong>browse files</strong></span>
+                                        <input type="file" id="csv-file-input" accept=".csv" class="hidden-input">
+                                    </div>
+
+                                    <div class="file-details hidden" id="file-details-panel">
+                                        <div class="file-info-row">
+                                            <span class="file-icon">📄</span>
+                                            <div class="file-meta">
+                                                <span class="file-name" id="selected-file-name">dataset.csv</span>
+                                                <span class="file-size" id="selected-file-size">0 KB</span>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-primary btn-block" id="btn-run-batch-inference">
+                                            🚀 Run Batch Predictions
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Batch Results Section -->
+                                <div class="batch-results-panel hidden" id="batch-results-panel">
+                                    <div class="batch-results-header">
+                                        <h3>Execution Summary</h3>
+                                        <button class="btn btn-success" id="btn-download-results">
+                                            📥 Download Full CSV
+                                        </button>
+                                    </div>
+
+                                    <div id="metrics-dashboard" class="metrics-grid hidden">
+                                        <div class="metric-card">
+                                            <span class="metric-label">Accuracy</span>
+                                            <span class="metric-val" id="metric-accuracy">0.0%</span>
+                                        </div>
+                                        <div class="metric-card">
+                                            <span class="metric-label">F1 Macro</span>
+                                            <span class="metric-val" id="metric-f1">0.00</span>
+                                        </div>
+                                        <div class="metric-card">
+                                            <span class="metric-label">Precision Macro</span>
+                                            <span class="metric-val" id="metric-precision">0.00</span>
+                                        </div>
+                                        <div class="metric-card">
+                                            <span class="metric-label">Recall Macro</span>
+                                            <span class="metric-val" id="metric-recall">0.00</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="batch-viz-layout">
+                                        <div class="preview-container">
+                                            <h4>Data Preview (Predictions)</h4>
+                                            <div class="table-scroll">
+                                                <table class="data-table" id="preview-table">
+                                                    <thead>
+                                                        <tr id="preview-table-header"></tr>
+                                                    </thead>
+                                                    <tbody id="preview-table-body"></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="cm-container hidden" id="confusion-matrix-container">
+                                            <h4>Evaluation Matrix</h4>
+                                            <img id="confusion-matrix-img" src="" alt="Confusion Matrix plot">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tab Content: Manual Entry -->
+                        <div class="tab-content" id="tab-manual">
+                            <p class="tab-description">
+                                Input specific carbon flux variables manually to predict whether the ecosystem behaves as a carbon <strong>Sink (S)</strong> or <strong>Not Sink (NS)</strong> in real-time.
+                            </p>
+
+                            <form id="manual-inference-form" class="manual-form">
+                                <div class="form-grid" id="manual-features-grid">
+                                    <!-- Inputs dynamically created from active model columns -->
+                                </div>
+
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary" id="btn-run-manual-inference">
+                                        🧪 Run Real-Time Prediction
+                                    </button>
+                                </div>
+                            </form>
+
+                            <div class="manual-result-card hidden" id="manual-result-card">
+                                <h3>Prediction Result</h3>
+                                <div class="prediction-badge-container">
+                                    <div class="prediction-badge" id="manual-prediction-val">--</div>
+                                </div>
+                                <div class="probability-meters" id="manual-prob-meters">
+                                    <!-- Class probabilities meters -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Error/Notification Toast -->
+    <div class="toast-notification hidden" id="error-toast">
+        <span class="toast-icon">⚠️</span>
+        <span class="toast-message" id="error-toast-msg">Error message goes here</span>
+        <button class="toast-close" id="btn-close-toast">&times;</button>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

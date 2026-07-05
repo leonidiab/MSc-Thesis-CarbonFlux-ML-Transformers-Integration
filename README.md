@@ -35,6 +35,21 @@ python scripts/test_cross_site.py \
     --test-site wombat
 ```
 
+### Interactive Testing Dashboard
+
+You can run the web-based interactive testing dashboard to visually test your best saved models with new datasets:
+
+```bash
+python scripts/run_app.py
+```
+
+This will automatically start a secure local Flask server at `http://127.0.0.1:5000` and open the dashboard in your browser. Key features:
+* **Model Selection Hub**: Automatically scans and displays metadata for all models in `outputs/`.
+* **Batch Prediction (CSV)**: Drag and drop datasets, preview classifications, and download tagged results. If ground truth is included, it generates validation metrics and an interactive confusion matrix.
+* **Real-time Form**: Test custom parameter values using input fields and sliders with class confidence probability meters.
+
+For more details about the UI architecture, API REST endpoints, and security/preprocessing safeguards, refer to the [Complete User Guide](file:///C:/Users/leoni/Documents/Github/MSc-Thesis-CarbonFlux-ML-Transformers-Integration-DEV/documentation/USER_GUIDE.md#4-interactive-testing-dashboard-web-ui).
+
 ### CLI Options
 
 ```bash
