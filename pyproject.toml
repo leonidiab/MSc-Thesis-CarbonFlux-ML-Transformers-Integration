@@ -58,3 +58,33 @@ warn_return_any = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+[tool.pylint.main]
+ignore-paths = ["^tests/.*$"]
+
+[tool.pylint.messages_control]
+disable = [
+    "invalid-name",                # Allows ML standard variables like X, y, X_train, etc.
+    "import-outside-toplevel",     # Allows importing heavy frameworks dynamically inside functions
+    "duplicate-code",             # Allows similar code in training scripts/models
+    "too-many-locals",             # Allowed for complex pipeline functions
+    "too-many-statements",         # Allowed for long orchestrator/runner functions
+    "too-many-arguments",          # Allowed for passing multiple configuration parameters
+    "too-many-instance-attributes",# Allowed for rich orchestrator/dataset state classes
+    "broad-exception-caught",      # Allowed for standard exception catching in run loops
+    "import-error",                # Allows pylint to run successfully without installing heavy dependencies
+    "line-too-long",               # Already handled by ruff, redundant in pylint
+    "too-many-branches",           # Allowed for scripts/orchestration flow control logic
+    "wrong-import-position",       # Allowed for scripts setting up path before importing local modules
+    "no-member",                   # Prevents false positives with dynamic packages (e.g. Pydantic, PyTorch)
+    "too-few-public-methods",      # Config/Model classes often contain only one method (run)
+    "unused-import",               # Already handled by ruff
+    "unused-variable",             # Already handled by ruff
+    "unused-argument",             # Allowed when conforming to external interfaces
+    "trailing-whitespace",         # Redundant, handled by IDE/ruff
+    "missing-final-newline",       # Redundant, handled by IDE/ruff
+    "unsupported-membership-test", # Solves false positives on dynamic container attributes
+    "consider-using-max-builtin",  # Allows explicit conditional checks for readability
+    "consider-using-min-builtin",  # Allows explicit conditional checks for readability
+]
+
