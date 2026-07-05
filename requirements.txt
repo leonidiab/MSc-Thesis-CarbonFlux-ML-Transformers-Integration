@@ -13,6 +13,7 @@ joblib>=1.3,<2.0
 pyyaml>=6.0,<7.0
 xlsxwriter>=3.2,<4.0
 pydantic>=2.0,<3.0
+flask>=3.0,<4.0
 
 # Development Dependencies (Optional)
 # To install, uncomment the lines below or use `pip install -e .[dev]`
